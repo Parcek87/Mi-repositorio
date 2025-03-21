@@ -29,3 +29,22 @@ def inicializar_base_datos():
     """, usuarios_iniciales)
     conexion.commit()
     conexion.close()
+    
+def agregar_usuario(nombre, telefono, email, ciudad, direccion):
+    conexion = sqlite3.connect("usuarios.db")
+    cursor = conexion.cursor()
+    cursor.execute("""
+        INSERT INTO usuarios (nombre, telefono, email, ciudad, direccion)
+        VALUES (?, ?, ?, ?, ?)
+    """, (nombre, telefono, email, ciudad, direccion))
+    conexion.commit()
+    conexion.close()
+
+# Leer (Read)
+def obtener_usuarios():
+    conexion = sqlite3.connect("usuarios.db")
+    cursor = conexion.cursor()
+    cursor.execute("SELECT * FROM usuarios")
+    usuarios = cursor.fetchall()
+    conexion.close()
+    return usuarios
