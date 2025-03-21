@@ -29,7 +29,7 @@ def inicializar_base_datos():
     """, usuarios_iniciales)
     conexion.commit()
     conexion.close()
-    
+
 def agregar_usuario(nombre, telefono, email, ciudad, direccion):
     conexion = sqlite3.connect("usuarios.db")
     cursor = conexion.cursor()
@@ -48,3 +48,27 @@ def obtener_usuarios():
     usuarios = cursor.fetchall()
     conexion.close()
     return usuarios
+
+def actualizar_telefono(id_usuario, nuevo_telefono):
+    conexion = sqlite3.connect("usuarios.db")
+    cursor = conexion.cursor()
+    cursor.execute("UPDATE usuarios SET telefono = ? WHERE id = ?", (nuevo_telefono, id_usuario))
+    conexion.commit()
+    conexion.close()
+
+def actualizar_email(id_usuario, nuevo_email):
+    conexion = sqlite3.connect("usuarios.db")
+    cursor = conexion.cursor()
+    cursor.execute("UPDATE usuarios SET email = ? WHERE id = ?", (nuevo_email, id_usuario))
+    conexion.commit()
+    conexion.close()
+
+def actualizar_datos(id_usuario, telefono, email, ciudad, direccion):
+    conexion = sqlite3.connect("usuarios.db")
+    cursor = conexion.cursor()
+    cursor.execute("""
+        UPDATE usuarios SET telefono = ?, email = ?, ciudad = ?, direccion = ?
+        WHERE id = ?
+    """, (telefono, email, ciudad, direccion, id_usuario))
+    conexion.commit()
+    conexion.close()
