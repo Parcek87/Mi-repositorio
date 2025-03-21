@@ -72,3 +72,10 @@ def actualizar_datos(id_usuario, telefono, email, ciudad, direccion):
     """, (telefono, email, ciudad, direccion, id_usuario))
     conexion.commit()
     conexion.close()
+
+def eliminar_usuario(id_usuario):
+    conexion = sqlite3.connect("usuarios.db")
+    cursor = conexion.cursor()
+    cursor.execute("DELETE FROM usuarios WHERE id = ?", (id_usuario,))
+    conexion.commit()
+    conexion.close()
